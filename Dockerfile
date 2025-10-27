@@ -1,0 +1,3 @@
+FROM dunglas/frankenphp:1.5-php8.3
+ 
+RUN install-php-extensions ctype curl dom fileinfo filter hash mbstring openssl pcre pdo session tokenizer xml redis gd zip exif bz2 intl sockets opcache pcntl
