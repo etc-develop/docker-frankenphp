@@ -13,8 +13,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - version: "8.1-debian"
-            file: Dockerfile-8.1
           - version: "8.2-debian"
             file: Dockerfile-8.2
           - version: "8.3-debian"
