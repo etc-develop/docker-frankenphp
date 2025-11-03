@@ -1,15 +1,26 @@
-name: Push Docker image with fixed tag
+name: Push Docker images
 
 on:
-  schedule:
-    - cron: "0 0 * * *" # 每天執行一次
   push:
     branches:
-      - "8.3"
+      - master # 你要觸發的分支
+  schedule:
+    - cron: "0 0 * * *" # 每天執行一次
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        include:
+          - version: "8.1-debian"
+            file: Dockerfile-8.1
+          - version: "8.2-debian"
+            file: Dockerfile-8.2
+          - version: "8.3-debian"
+            file: Dockerfile-8.3
+          - version: "8.4-debian"
+            file: Dockerfile-8.4
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,5 +35,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          file: ${{ matrix.file }}
           push: true
-          tags: etcdevelop/frankenphp:8.3
+          tags: |
+            etcdevelop/frakenphp:${{ matrix.version }}
